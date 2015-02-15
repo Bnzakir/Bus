@@ -14,7 +14,12 @@ public class RequestHoliday
 			requestHoliday(2012, test1, test2);
     }
     
-    // computes the length of a holiday between two dates
+    
+    /**
+	 	* Computes the length in number of days of a holiday between two dates
+	 	* @param start_date start date
+	 	* @param end_date end date
+   	*/
     public static long findLength(Date start_date, Date end_date)
     {
 
@@ -24,7 +29,10 @@ public class RequestHoliday
 			return difference / (24 * 60 * 60 * 1000) + 1;
     }
     
-    // checks how many drivers are unavailable on a given date
+    /**
+   	* Find the number of drivers unavailable on a given date
+   	* @param date the date you wish to check for unavailability
+   	*/
     public static int driversUnavailable(Date date)
     {
     	int[] driverIDs = DriverInfo.getDrivers();
@@ -39,10 +47,17 @@ public class RequestHoliday
     	return unavailableCount;    
     }
     
-    // requesting a holiday and checking if it meets rostering rules before granting it
+    /**
+   	* Requesting a holiday and checking if it meets rostering rules 
+   	* before granting it
+   	* @param driverID driver ID of the driver requestion the holiday
+   	* @param start_date start date of holiday request
+   	* @param end_date end date of holiday request
+   	*/    
+    // 
     public static boolean requestHoliday(int driverID, Date start_date, Date end_date)
     {
-    	if(start_date.after(end_date)
+    	if(start_date.after(end_date))
     		throw new InvalidQueryException("start_date is before end_date");
     	
     	long length = findLength(start_date, end_date);
