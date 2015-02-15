@@ -8,8 +8,8 @@ public class RequestHoliday
     
       database.openBusDatabase();
             
-    	Date test1 = new Date(115, 1, 23);
-			Date test2 = new Date(115, 1, 25);
+    	Date test1 = new Date(115, 11, 26);
+			Date test2 = new Date(116, 0, 6);
 
 			requestHoliday(2012, test1, test2);
     }
@@ -78,8 +78,8 @@ public class RequestHoliday
 				Date start_of_next_year = new Date(end_date.getYear(), 0, 1);
 				
 				int taken_from_next_year = DriverInfo.getNextHolidaysTaken(driverID);
-				int length_in_current_year = findLength(start_date, end_of_year);
-				int length_in_next_year = find_length(start_of_next_year, end_date);
+				long length_in_current_year = findLength(start_date, end_of_year);
+				long length_in_next_year = findLength(start_of_next_year, end_date);
 				
     		if(length_in_current_year + taken > 25)
     			return false; // request denied
