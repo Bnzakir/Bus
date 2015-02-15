@@ -67,6 +67,25 @@ public class DriverInfo
   }
 
   /**
+   * Get the number of days holiday taken, or planned to be taken, in the
+   * next calendar year
+   */
+  public static int getNextHolidaysTaken(int driver)
+  {
+    if (driver == 0) throw new InvalidQueryException("Nonexistent driver");
+    return database.busDatabase.get_int("driver", driver, "holidays_taken_next_year");
+  }
+
+  /**
+   * Set the number of days holiday taken, or planned to be taken, in
+   * the next calendar year.
+   */
+  public static void setNextHolidaysTaken(int driver, int value)
+  {
+    if (driver == 0) throw new InvalidQueryException("Nonexistent driver");
+    database.busDatabase.set_value("driver", driver, "holidays_taken_next_year", value);
+  }
+  /**
    * Get the number of hours worked by a driver so far this calandar year
    */
   public static int getHoursThisYear(int driver)
