@@ -62,12 +62,30 @@ public class RequestHoliday
     	
     	long length = findLength(start_date, end_date);
     	int taken = DriverInfo.getHolidaysTaken(driverID);
-    	int holidaysTaken = 0;    	
+    	int holidaysTaken = 0;   
+    	int holidaysTakenNextYear = 0; 	
     	Date current_date = start_date;
-    	    	
-    	if(length + taken > 25){System.out.println("no holiday");
-    		return false; // request denied
+    	
+    	if(start_date.getYear() == end_date.getYear())
+    	{    	
+    		if(length + taken > 25)
+    			return false; // request denied
     	}
+	
+			if(end_date.getYear() > start_date.getYear())
+			{
+				Date end_of_year = new Date(start_date.getYear(), 11, 31);
+				Date start_of_next_year = new Date(end_date.getYear(), 0, 1);
+				
+				int taken_from_next_year = DriverInfo.getNextHolidaysTaken(driverID);
+				int length_in_current_year = findLength(start_date, end_of_year);
+				int length_in_next_year = find_length(start_of_next_year, end_date);
+				
+    		if(length_in_current_year + taken > 25)
+    			return false; // request denied
+    		if(length_in_next_year + taken_from_next_year > 25)
+    			return false; // request denied				
+			}
 
     		
   		for(int i=0; i < length; i++)
@@ -90,20 +108,27 @@ public class RequestHoliday
 			
 
     	
+    	
   		for(int i=0; i < length; i++)
   		{
-  		  //System.out.println("fdgfdg");
   			if(DriverInfo.isAvailable(driverID, current_date))
   			{
   			  
   				DriverInfo.setAvailable(driverID, current_date, false);
-  				holidaysTaken++;
+  				if(current_date.getYear() == start_date.getYear())
+  					holidaysTaken++;
+					else
+						holidaysTakenNextYear++;
 				}
 				current_date.setDate(current_date.getDate()+1);
   		}
-  		   System.out.println(current_date);
+
   		int newHolidaysTaken = DriverInfo.getHolidaysTaken(driverID) + holidaysTaken;
     	DriverInfo.setHolidaysTaken(driverID, newHolidaysTaken);
+
+  		int newHolidaysTakenNextYear = DriverInfo.getNextHolidaysTaken(driverID) + holidaysTakenNextYear;
+    	DriverInfo.setNextHolidaysTaken(driverID, newHolidaysTakenNextYear); 
+    	   	
     	return true; // holiday granted
     }
 }
