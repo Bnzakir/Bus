@@ -84,10 +84,11 @@ public class RequestHoliday
     		if(length_in_current_year + taken > 25)
     			return false; // request denied
     		if(length_in_next_year + taken_from_next_year > 25)
-    			return false; // request denied				
+    			return false; // request denied	
 			}
 
-    		
+    	
+    	// check availabilty	
   		for(int i=0; i < length; i++)
   		{
   			// if weekend 0=sunday, 6=saturday
@@ -115,11 +116,12 @@ public class RequestHoliday
   			{
   			  
   				DriverInfo.setAvailable(driverID, current_date, false);
-  				if(current_date.getYear() == start_date.getYear())
+  				if(current_date.getYear() != end_date.getYear())
   					holidaysTaken++;
 					else
 						holidaysTakenNextYear++;
 				}
+				
 				current_date.setDate(current_date.getDate()+1);
   		}
 
