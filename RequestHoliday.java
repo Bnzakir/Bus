@@ -7,11 +7,6 @@ public class RequestHoliday
     {
     
       database.openBusDatabase();
-            
-    	Date test1 = new Date(115, 11, 26);
-			Date test2 = new Date(116, 0, 6);
-
-			requestHoliday(2012, test1, test2);
     }
     
     
@@ -57,6 +52,9 @@ public class RequestHoliday
     // 
     public static boolean requestHoliday(int driverID, Date start_date, Date end_date)
     {
+            System.out.println(driverID);
+            System.out.println(start_date);
+            System.out.println(end_date);
     	if(start_date.after(end_date))
     		throw new InvalidQueryException("start_date is before end_date");
     	
