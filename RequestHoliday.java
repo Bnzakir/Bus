@@ -51,7 +51,8 @@ public class RequestHoliday
     	int taken = DriverInfo.getHolidaysTaken(driverID);
     	int holidaysTaken = 0;   
     	int holidaysTakenNextYear = 0; 	
-    	Date current_date = start_date;
+    	Date current_date = new Date();
+    	current_date = start_date;
     	
     	if(start_date.getYear() == end_date.getYear())
     	{    	
@@ -93,7 +94,7 @@ public class RequestHoliday
   		}
 
 			current_date.setDate(current_date.getDate()-(int)length);
-			
+			//current_date = start_date;
 
     	
     	
@@ -103,7 +104,8 @@ public class RequestHoliday
   			{
   			  
   				DriverInfo.setAvailable(driverID, current_date, false);
-  				if(current_date.getYear() != end_date.getYear())
+  				System.out.println(driverID + " " + current_date);
+  				if(current_date.getYear() == start_date.getYear())
   					holidaysTaken++;
 					else
 						holidaysTakenNextYear++;
