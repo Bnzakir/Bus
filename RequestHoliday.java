@@ -47,6 +47,7 @@ public class RequestHoliday
     	if(start_date.after(end_date))
     		throw new InvalidQueryException("start_date is before end_date");
     	
+    	int startYear = start_date.getYear();
     	long length = findLength(start_date, end_date);
     	int taken = DriverInfo.getHolidaysTaken(driverID);
     	int holidaysTaken = 0;   
@@ -105,7 +106,7 @@ public class RequestHoliday
   			  
   				DriverInfo.setAvailable(driverID, current_date, false);
   				System.out.println(driverID + " " + current_date);
-  				if(current_date.getYear() == start_date.getYear())
+  				if(current_date.getYear() == startYear)
   					holidaysTaken++;
 					else
 						holidaysTakenNextYear++;
