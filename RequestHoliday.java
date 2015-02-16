@@ -2,14 +2,6 @@ import java.util.Date;
 
 public class RequestHoliday 
 {
-
-    public static void main(String[] args) 
-    {
-    
-      database.openBusDatabase();
-    }
-    
-    
     /**
 	 	* Computes the length in number of days of a holiday between two dates
 	 	* @param start_date start date
@@ -52,9 +44,6 @@ public class RequestHoliday
     // 
     public static boolean requestHoliday(int driverID, Date start_date, Date end_date)
     {
-            System.out.println(driverID);
-            System.out.println(start_date);
-            System.out.println(end_date);
     	if(start_date.after(end_date))
     		throw new InvalidQueryException("start_date is before end_date");
     	

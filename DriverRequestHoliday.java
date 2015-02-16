@@ -97,9 +97,6 @@ public class DriverRequestHoliday extends JFrame implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             Date startDate = (Date) datePickerStart.getModel().getValue();
             Date endDate = (Date) datePickerEnd.getModel().getValue();
-            System.out.println(IBMS.driverID);
-            System.out.println(startDate);
-            System.out.println(endDate);
 
             if(RequestHoliday.requestHoliday(IBMS.driverID, startDate, endDate))
                 System.out.println("HOLIDAY OK");

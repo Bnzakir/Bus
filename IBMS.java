@@ -14,6 +14,7 @@ public class IBMS extends JFrame implements ActionListener{
          * Launch the application.
          */
         public static void main(String[] args) {
+                database.openBusDatabase();
                 EventQueue.invokeLater(new Runnable() {
                         public void run() {
                                 try {
@@ -30,6 +31,7 @@ public class IBMS extends JFrame implements ActionListener{
          * Create the frame.
          */
         public static int driverID;
+        public static String driverNumber;
         public IBMS() {
                 setTitle("IBMS");
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,31 +41,34 @@ public class IBMS extends JFrame implements ActionListener{
                 setContentPane(contentPane);
                 contentPane.setLayout(null);
                
-                btnTimetable = new JButton("Tmetable");
+                btnTimetable = new JButton("Timetable");
                 btnTimetable.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                                
                         }
                 });
-                btnTimetable.setBounds(147, 29, 93, 33);
+                btnTimetable.setBounds(150, 29, 120, 33);
                 contentPane.add(btnTimetable);
                
                 btnDriverLogin = new JButton("Driver Login");
                 btnDriverLogin.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                        driverID = Integer.parseInt(
-                                   JOptionPane.showInputDialog("Please enter driver Id"));
+                        driverNumber = (JOptionPane.showInputDialog("Please enter driver number"));
                         
-                        //RequestHoliday.requestHoliday(driverID, DriverRequestHoliday.)
-                        //if (responseFromDB != 0)
-                        DriverRequestHoliday j2 = new DriverRequestHoliday();
-                        j2.setVisible(true);
-                        //else
-                        //WrongPassword j3 = new WrongPassword();
-                        //j3.setVisible(true);
+                        driverID = DriverInfo.findDriver(driverNumber);
+                        if (driverID != 0)
+                        {
+                            DriverRequestHoliday j2 = new DriverRequestHoliday();
+                            j2.setVisible(true);
+                        }
+                        else
+                        {
+                            WrongPassword j3 = new WrongPassword();
+                            j3.setVisible(true);
+                        }
                         }
                 });
-                btnDriverLogin.setBounds(32, 29, 105, 33);
+                btnDriverLogin.setBounds(20, 29, 120, 33);
                 contentPane.add(btnDriverLogin);
         }
 
