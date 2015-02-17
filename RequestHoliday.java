@@ -3,17 +3,17 @@ import java.util.Date;
 public class RequestHoliday 
 {
     /**
-	 	* Computes the length in number of days of a holiday between two dates
-	 	* @param start_date start date
-	 	* @param end_date end date
-   	*/
+     * Computes the length in number of days of a holiday between two dates
+     * @param start_date start date
+     * @param end_date end date
+     */
     public static long findLength(Date start_date, Date end_date)
     {
 
-			//in milliseconds
-			long difference = end_date.getTime() - start_date.getTime();
+	//in milliseconds
+	long difference = end_date.getTime() - start_date.getTime();
 			
-			return difference / (24 * 60 * 60 * 1000) + 1;
+	return difference / (24 * 60 * 60 * 1000) + 1;
     }
     
     /**
@@ -54,7 +54,25 @@ public class RequestHoliday
     	int holidaysTakenNextYear = 0; 	
     	Date current_date = new Date();
     	current_date = start_date;
-    	
+
+        // set hours, minutes and seconds of current date to 0
+        // in order to avoid different dates
+        current_date.setHours(0);
+        current_date.setMinutes(0);
+        current_date.setSeconds(0);    	
+
+         Date today = new Date();
+ System.out.println(today);
+
+        if (today.getYear() > start_date.getYear() 
+            || (today.getYear() == start_date.getYear() 
+                && today.getMonth() > start_date.getMonth()) 
+            || (today.getYear() == start_date.getYear() 
+                && today.getMonth() == start_date.getMonth() 
+                && today.getDate() > start_date.getDate()))
+
+          return false;
+      
     	if(start_date.getYear() == end_date.getYear())
     	{    	
     		if(length + taken > 25)
@@ -80,6 +98,15 @@ public class RequestHoliday
     	// check availabilty	
   		for(int i=0; i < length; i++)
   		{
+ 
+                  // if holidays already booked for those days
+ /*System.out.println(driverID);
+  System.out.println(current_date);
+                  System.out.println(DriverInfo.isAvailable(driverID, current_date));*/
+                  if (!DriverInfo.isAvailable(driverID, current_date))
+                    return false;
+
+
   			// if weekend 0=sunday, 6=saturday
   			if(current_date.getDay() == 0 || current_date.getDay() == 6)
   			{
@@ -108,7 +135,7 @@ public class RequestHoliday
   				System.out.println(driverID + " " + current_date);
   				if(current_date.getYear() == startYear)
   					holidaysTaken++;
-					else
+				else
 						holidaysTakenNextYear++;
 				}
 				
