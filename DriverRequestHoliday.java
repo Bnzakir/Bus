@@ -101,13 +101,11 @@ public class DriverRequestHoliday extends JFrame implements ActionListener{
 
             if(RequestHoliday.requestHoliday(IBMS.driverID, startDate, endDate))
             {
-                //System.out.println("HOLIDAY OK");
                 JOptionPane.showMessageDialog(contentPane, "Holiday request sucessful.");
             }
             else
             {
-                //System.out.println("NO HOLIDAY");
-                JOptionPane.showMessageDialog(contentPane, "Holiday request NOT succesful.");
+                JOptionPane.showMessageDialog(contentPane, RequestHoliday.reason);
             }
         }
     }
