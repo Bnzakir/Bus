@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -99,8 +100,14 @@ public class DriverRequestHoliday extends JFrame implements ActionListener{
             Date endDate = (Date) datePickerEnd.getModel().getValue();
 
             if(RequestHoliday.requestHoliday(IBMS.driverID, startDate, endDate))
-                System.out.println("HOLIDAY OK");
+            {
+                //System.out.println("HOLIDAY OK");
+                JOptionPane.showMessageDialog(contentPane, "Holiday request sucessful.");
+            }
             else
-            System.out.println("NO HOLIDAY");
+            {
+                //System.out.println("NO HOLIDAY");
+                JOptionPane.showMessageDialog(contentPane, "Holiday request NOT succesful.");
+            }
         }
     }
