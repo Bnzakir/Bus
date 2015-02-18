@@ -1,7 +1,9 @@
 import java.util.Date;
 
-public class RequestHoliday 
+public class RequestHoliday
 {
+    public static String reason;
+
     /**
      * Computes the length in number of days of a holiday between two dates
      * @param start_date start date
@@ -70,13 +72,18 @@ public class RequestHoliday
             || (today.getYear() == start_date.getYear() 
                 && today.getMonth() == start_date.getMonth() 
                 && today.getDate() > start_date.getDate()))
-
+	{
+	  reason = "You can't select the date in the past.";
           return false;
+	}
       
     	if(start_date.getYear() == end_date.getYear())
     	{    	
     		if(length + taken > 25)
+		{
+			reason = "Number of holidays taken exceeds 25.";
     			return false; // request denied
+		}
     	}
 	
 			if(end_date.getYear() > start_date.getYear())
@@ -89,9 +96,15 @@ public class RequestHoliday
 				long length_in_next_year = findLength(start_of_next_year, end_date);
 				
     		if(length_in_current_year + taken > 25)
+		{
+			reason = "Number of holidays taken in current year exceeds 25.";	
     			return false; // request denied
+		}
     		if(length_in_next_year + taken_from_next_year > 25)
+		{
+			reason = "Number of holidays taken in the next year exceeds 25.";
     			return false; // request denied	
+		}
 			}
 
     	
@@ -103,21 +116,36 @@ public class RequestHoliday
  /*System.out.println(driverID);
   System.out.println(current_date);
                   System.out.println(DriverInfo.isAvailable(driverID, current_date));*/
-                  if (!DriverInfo.isAvailable(driverID, current_date))
-                    return false;
+                 /* if (!DriverInfo.isAvailable(driverID, current_date))
+                    return false;*/
 
 
   			// if weekend 0=sunday, 6=saturday
   			if(current_date.getDay() == 0 || current_date.getDay() == 6)
   			{
   				if(driversUnavailable(current_date) >= 15)
-    				return false; // request denied
-    		}
-    		else
-    		{
-					if(driversUnavailable(current_date) >= 10)
-    				return false; // request denied
+				{
+					reason = "Maximum drivers unvailable on " 
+						 + current_date.getYear() + "-" 
+						 + current_date.getMonth() + "-" 
+						 + current_date.getDate() 
+						 + " is reached";
+    					return false; // request denied
 				}
+    			}
+    			else
+    			{
+				if(driversUnavailable(current_date) >= 10)
+				{
+					reason = "Maximum drivers unvailable on " 
+						 + current_date.getYear() + "-" 
+						 + current_date.getMonth() + "-" 
+						 + current_date.getDate() 
+						 + " is reached";
+				
+    					return false; // request denied
+				}
+			}
 				current_date.setDate(current_date.getDate()+1);
   		}
 
