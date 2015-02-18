@@ -47,7 +47,7 @@ public class DriverRequestHoliday extends JFrame implements ActionListener{
         private JDatePickerImpl datePickerEnd;
         public DriverRequestHoliday() {
                 setTitle("Driver Request Holiday Page");
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 setBounds(300, 300, 300, 500);
                 contentPane = new JPanel();
                 contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

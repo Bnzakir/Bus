@@ -32,15 +32,15 @@ public class WrongPassword extends JFrame {
          */
         public WrongPassword() {
                 setTitle("Driver Request Holiday Page");
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                setBounds(100, 100, 349, 235);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                setBounds(100, 100, 400, 220);
                 contentPane = new JPanel();
                 contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
                 setContentPane(contentPane);
                 contentPane.setLayout(null);
                
-                JLabel lblStartOfHoliday = new JLabel("Wrong USER ID");
-                lblStartOfHoliday.setBounds(10, 31, 120, 22);
+                JLabel lblStartOfHoliday = new JLabel("The driver number could not be found. Please retry.");
+                lblStartOfHoliday.setBounds(40, 40, 350, 22);
                 contentPane.add(lblStartOfHoliday);
                
                 JButton btnRequestHoliday = new JButton("OK");

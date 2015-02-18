@@ -35,7 +35,7 @@ public class IBMS extends JFrame implements ActionListener{
         public IBMS() {
                 setTitle("IBMS");
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                setBounds(100, 100, 299, 130);
+                setBounds(100, 100, 300, 130);
                 contentPane = new JPanel();
                 //contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
                 setContentPane(contentPane);
@@ -52,21 +52,24 @@ public class IBMS extends JFrame implements ActionListener{
                
                 btnDriverLogin = new JButton("Driver Login");
                 btnDriverLogin.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent e)
+                {
                         driverNumber = (JOptionPane.showInputDialog("Please enter driver number"));
-                        
-                        driverID = DriverInfo.findDriver(driverNumber);
-                        if (driverID != 0)
+                        if (driverNumber != null)
                         {
-                            DriverRequestHoliday j2 = new DriverRequestHoliday();
-                            j2.setVisible(true);
+                            driverID = DriverInfo.findDriver(driverNumber);
+                            if (driverID != 0)
+                            {
+                                DriverRequestHoliday j2 = new DriverRequestHoliday();
+                                j2.setVisible(true);
+                            }
+                            else
+                            {
+                                WrongPassword j3 = new WrongPassword();
+                                j3.setVisible(true);
+                            }
                         }
-                        else
-                        {
-                            WrongPassword j3 = new WrongPassword();
-                            j3.setVisible(true);
-                        }
-                        }
+                }
                 });
                 btnDriverLogin.setBounds(20, 29, 120, 33);
                 contentPane.add(btnDriverLogin);
