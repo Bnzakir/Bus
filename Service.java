@@ -10,13 +10,16 @@ public class Service
 	private int driver_id;
 	private int bus_id;
 
-	Service(int size, ServiceTime[] data)
+	private int route;
+
+	Service(int size, ServiceTime[] data, int requiredRoute)
 	{
 		service = new ServiceTime[size];
 
 		for(int i=0; i < size; i++)
 			service[i] = data[i];
 
+		route = requiredRoute;
 		service_number = service[0].getService();
 		start_time_in_minutes = service[0].getTime();
 		end_time_in_minutes = service[size - 1].getTime();
@@ -72,6 +75,11 @@ public class Service
 	{
 		int index = service.length - 1;
 		return service[index].getStop();
+	}
+
+	public int getRoute()
+	{
+		return route;
 	}
 
 	//public String toString()
