@@ -1,8 +1,3 @@
-/*
- * A very simple application illustrating how to use the interface.
- * Prints the names of all the drivers in the database.
- * @author John Sargeant
- */
 import java.util.*;
 import static java.util.Calendar.*;
 public class Roster {
@@ -16,7 +11,7 @@ public class Roster {
 
         int routes[] = {65,66,67,68};
         ArrayList<Service> services = new ArrayList();
-        
+
         getAllServices(routes, services);
 
         printServiceTimes(services);

@@ -1,23 +1,27 @@
 import java.util.*;
 
-public class Scheduling
+public class temp
 {
   public static void main(String args[])
   {
     database.openBusDatabase();
-    Date tempDate = new Date(115,7,13);
+    Date tempDate = new Date();
     ScheduleDrivers(tempDate);
   }
+
   public static void ScheduleDrivers(Date requiredDate)
   {
+  int temp = 0;
   boolean busAssigned = false;
-  int busCount = 0;
   Date date = requiredDate;
+  int busCount = 0;
   //if driver is available add him to the arraylist
   ArrayList<Driver> drivers = new ArrayList();
   ArrayList<Driver> assignedDrivers = new ArrayList();
   int[] allDrivers = DriverInfo.getDrivers();
-  int routes[] = {65,66,67,68};
+
+
+  int routes[] = {67};
   ArrayList<Service> services = new ArrayList();
   ArrayList<Service> assignedServices = new ArrayList();
 
@@ -44,9 +48,9 @@ public class Scheduling
 
   // for each driver, based on the fair scheduling algorithm, assign him to a service
   if(date.getDay() == 0 )
-    Roster.getServicesSaturday(routes, services);
-  else if(date.getDay() == 6)
     Roster.getServicesSunday(routes, services);
+  else if(date.getDay() == 6)
+    Roster.getServicesSaturday(routes, services);
   else
     Roster.getServicesWeekday(routes, services);
 
@@ -56,19 +60,14 @@ public class Scheduling
       //go through each driver trying to assign as many services to him
       for(int i = 0; i < drivers.size(); i++)
       {
-        System.out.println("Driver " + i);
-
         //loop through all services, trying to assign driver
         for(int j = 0; j < services.size(); j++)
         {
-          System.out.println("Service " + j);
           if (!drivers.get(i).hasTakenBreak() && drivers.get(i).isAvailable(services.get(j).getStart()) && drivers.get(i).getMinutesForToday() <= 300)
           {
-            System.out.println("a");
             if (drivers.get(i).getMinutesForToday() + services.get(j).getDuration() > 300)
             //give him a 1 hour break
             {
-              System.out.println("b");
               drivers.get(i).setBreak();
               drivers.get(i).setUnavailableDriverStartTime(drivers.get(i).getUnavailableDriverEndTime());
               drivers.get(i).setUnavailableDriverEndTime(drivers.get(i).getUnavailableDriverStartTime()+60);
@@ -76,12 +75,11 @@ public class Scheduling
             else
             // assign
             {
-              System.out.println("c");
+              //assign a driver
               services.get(j).setDriver(drivers.get(i));
               drivers.get(i).setUnavailableDriverStartTime(services.get(j).getStart());
               drivers.get(i).setUnavailableDriverEndTime(services.get(j).getEnd());
               drivers.get(i).addMinutesForToday(services.get(j).getDuration());
-              System.out.println("Driver assigned");
 
               //assign a bus
               while (!busAssigned)
@@ -91,78 +89,59 @@ public class Scheduling
                   services.get(j).setBus(buses.get(busCount).getID());
                   buses.get(busCount).setUnavailableBusStartTime(services.get(j).getStart());
                   buses.get(busCount).setUnavailableBusEndTime(services.get(j).getEnd());
-                  buses.get(busCount).addBusMinutesForToday(services.get(j).getDuration());
                   busAssigned = true;
                 }
                 busCount++;
               }
               busAssigned = false;
-              busCount = 0;
 
               assignedServices.add(services.get(j));
               //remove the service from the array list
               services.remove(services.get(j));
-              System.out.println("Service removed");
             }
           }
           else if (drivers.get(i).hasTakenBreak() && drivers.get(i).isAvailable(services.get(j).getStart()) && drivers.get(i).getMinutesForToday() + services.get(j).getDuration() <= 600)
           {
-            System.out.println("d");
             //assign
             services.get(j).setDriver(drivers.get(i));
             drivers.get(i).setUnavailableDriverStartTime(services.get(j).getStart());
             drivers.get(i).setUnavailableDriverEndTime(services.get(j).getEnd());
             drivers.get(i).addMinutesForToday(services.get(j).getDuration());
-            System.out.println("Driver assigned");
 
-              //assign a bus
-              while (!busAssigned)
+            //assign a bus
+            while (!busAssigned)
+            {
+              if(buses.get(busCount).isAvailable(services.get(j).getStart()))
               {
-                if(buses.get(busCount).isAvailable(services.get(j).getStart()))
-                {
-                  services.get(j).setBus(buses.get(busCount).getID());
-                  buses.get(busCount).setUnavailableBusStartTime(services.get(j).getStart());
-                  buses.get(busCount).setUnavailableBusEndTime(services.get(j).getEnd());
-                  buses.get(busCount).addBusMinutesForToday(services.get(j).getDuration());
-                  busAssigned = true;
-                }
-                busCount++;
+                services.get(j).setBus(buses.get(busCount).getID());
+                buses.get(busCount).setUnavailableBusStartTime(services.get(j).getStart());
+                buses.get(busCount).setUnavailableBusEndTime(services.get(j).getEnd());
+                busAssigned = true;
               }
-              busAssigned = false;
-              busCount = 0;
+              busCount++;
+            }
+            busAssigned = false;
 
             assignedServices.add(services.get(j));
             //remove the service from the array list
             services.remove(services.get(j));
-            System.out.println("Service removed");
           }
           else if (drivers.get(i).hasTakenBreak() && drivers.get(i).isAvailable(services.get(j).getStart()) && drivers.get(i).getMinutesForToday() + services.get(j).getDuration() > 600)
           {
-            System.out.println("e");
             assignedDrivers.add(drivers.get(i));
             //worked enough so remove him
             drivers.remove(drivers.get(i));
-            System.out.println("Driver removed");
           }
         }//for services
       }//for drivers
   }//while services not empty
   for (Driver driver : assignedDrivers)
   {
-
     driver.setHoursForToday();
     DriverInfo.setHoursThisWeek(driver.getDriverID(), (DriverInfo.getHoursThisWeek(driver.getDriverID()) + driver.getHoursForToday()));
     DriverInfo.setHoursThisYear(driver.getDriverID(), (DriverInfo.getHoursThisYear(driver.getDriverID()) + driver.getHoursForToday()));
-    System.out.println("herro" + driver.getDriverID() + " " + (DriverInfo.getHoursThisWeek(driver.getDriverID()) + " "+  driver.getMinutesForToday()));
-  }
-  for (Bus bus : buses)
-  {
-    if (bus.getHoursDriven() > 0)
-    {
-      int idOfBus =bus.getID();
-      BusInfo.setAvailable(idOfBus, date, false);
-      System.out.println("busss" + bus.getHoursDriven());
-    }
+    System.out.println(" " + temp);
+    temp++;
   }
 }//ScheduleDrivers()
 

@@ -5,12 +5,16 @@ public class Driver implements Comparable<Driver>
   private int unavailableEndTime;
   private int minutesToday;
   private boolean breakTaken;
+  private int hoursToday;
 
   public Driver(int requiredID)
   {
     driverID = requiredID;
     minutesToday = 0;
+    hoursToday = 0;
     breakTaken = false;
+    unavailableEndTime = 0;
+    unavailableStartTime = 0;
   }
 
   public int getDriverID()
@@ -64,6 +68,20 @@ public class Driver implements Comparable<Driver>
     return minutesToday;
   }
 
+  public void setHoursForToday()
+  {
+    if((minutesToday/60)%60 == 0)
+      hoursToday = minutesToday/60;
+    else
+      hoursToday = minutesToday/60 + 1;
+  }
+
+  public int getHoursForToday()
+  {
+    return hoursToday;
+  }
+
+
   public boolean hasTakenBreak()
   {
     if(breakTaken)
@@ -78,7 +96,7 @@ public class Driver implements Comparable<Driver>
 
   public boolean isAvailable(int serviceStartTime)
   {
-    if (unavailableEndTime < serviceStartTime)
+    if (unavailableEndTime <= serviceStartTime)
       return true;
     else return false;
   }
