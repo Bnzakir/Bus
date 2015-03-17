@@ -5,7 +5,7 @@
  */
 import java.util.*;
 import static java.util.Calendar.*;
-public class test {
+public class Roster {
   public enum timetableKind {weekday, saturday, sunday};
     /**
      * @param args the command line arguments
@@ -15,8 +15,9 @@ public class test {
         database.openBusDatabase();
 
         int routes[] = {65,66,67,68};
-
-        getAllServices(routes);
+        ArrayList<Service> services = new ArrayList();
+        
+        getAllServices(routes, services);
 
         printServiceTimes(services);
        // printServiceTimes(service_times);
@@ -25,7 +26,7 @@ public class test {
 
     public static ArrayList<Service> getAllServices(int routes[], ArrayList<Service> services)
     {
-        ArrayList<Service> services = new ArrayList();
+        
         for(int route : routes)
         {
             Service services1[] = getServiceTimesRoute(route, TimetableInfo.timetableKind.weekday);
