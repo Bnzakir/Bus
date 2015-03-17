@@ -7,7 +7,7 @@ public class Service
 	private int end_time_in_minutes;
 
 	private int service_number;
-	private int driver_id;
+	private Driver driver;
 	private int bus_id;
 
 	private int route;
@@ -31,9 +31,9 @@ public class Service
 	}
 
 
-	public void setDriver(int id)
+	public void setDriver(Driver requiredDriver)
 	{
-		driver_id = id;
+		driver = requiredDriver;
 	}
 
 	public int getServiceNumber()
@@ -56,9 +56,9 @@ public class Service
 		return duration_in_minutes;
 	}
 
-	public int getDriver()
+	public Driver getDriver()
 	{
-		return driver_id;
+		return driver;
 	}
 
 	public void setBus(int id)
