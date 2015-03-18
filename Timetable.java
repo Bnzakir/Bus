@@ -32,23 +32,31 @@ public class Timetable extends JFrame{
     public static void main(String[] args) 
     {
         database.openBusDatabase();
-        Timetable mainFrame	= new Timetable();
-	      mainFrame.setVisible( true );         
-     
+
+        Date date = new Date(116, 2, 21);
+        int day = date.getDate();
+        for (int index = 0; index < 7; index++)
+        {
+          Timetable mainFrame = new Timetable(date);
+          mainFrame.setVisible( true ); 
+          date.setDate(++day);
+        }
     }
-    
-    
-   
 /*******************************************************************************/
 	  // Constructor of main frame
-	  public Timetable()
+	  public Timetable(Date date)
 	  {
-        Date tempDate = new Date(115,9,20);
+              //Date date = new Date(116, 1, 1);
+             // int day = date.getDate();
 		  // Set the frame characteristics
-		  setTitle( "Simple Table Application" );
-		  setSize( 300, 200 );
+		  setTitle("Date: " + date.getDate() + "." + date.getMonth() + "." + (date.getYear()+1900));
+		  setSize( 1000, 1000 );
 		  setBackground( Color.gray );
-            services = Scheduling.Schedule(tempDate);
+              // for (int index = 0; index < nrOfDays; index++)
+             //  {
+                  services = Scheduling.Schedule(date);
+               //   date.setDate(++day);
+              // }
 		  // Create a panel to hold all other components
 		  topPanel = new JPanel();
 		  topPanel.setLayout( new BorderLayout() );
@@ -56,10 +64,6 @@ public class Timetable extends JFrame{
 
 		  // Create columns names, according to the number of bus stops
 		  
-
-
-
-
 /* Method to store all the timing points in an array list */
 
         int servicesize =  services.size();
@@ -83,9 +87,9 @@ public class Timetable extends JFrame{
             
             for(int j = 1; j < services.get(i).getServiceTimes().length + 1; j++)
             {
-                int time =  services.get(i).getServiceTimes()[j - 1].getTime();
+                int time = services.get(i).getServiceTimes()[j - 1].getTime();
 
-                times[i][j] = (time/60) + ":" + (time%60);
+                times[i][j] =  BusStopInfo.getName(services.get(i).getServiceTimes()[j - 1].getStop()) + " " + (time/60) + "\n:" + (time%60);
             }
 
         } 

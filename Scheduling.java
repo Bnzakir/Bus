@@ -12,6 +12,7 @@ public class Scheduling
   {
 
     int routes[] = {65,66,67,68};
+
     ArrayList<Service> assigned_driver_services = ScheduleDrivers(date, routes);
 
     return ScheduleBuses(date, assigned_driver_services, routes);
@@ -31,6 +32,12 @@ public class Scheduling
   int[] allDrivers = DriverInfo.getDrivers();
   ArrayList<Service> services = new ArrayList();
   ArrayList<Service> assignedServices = new ArrayList();
+
+  if(date.getDay() == 0 )
+    {
+      for (int driverID : allDrivers)
+        DriverInfo.setHoursThisWeek(driverID, 0);
+    }
 
   for (int i = 0; i < allDrivers.length; i++)
   {

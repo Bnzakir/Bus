@@ -1,1 +1,2 @@
-java -cp mysql-connector-java-5.1.12-bin.jar:. Scheduling
+java -cp mysql-connector-java-5.1.12-bin.jar:. Timetable 7
+ 
