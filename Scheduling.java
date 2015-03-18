@@ -5,14 +5,21 @@ public class Scheduling
   public static void main(String args[])
   {
     database.openBusDatabase();
-    Date tempDate = new Date(115,9,9);
-  ArrayList<Service> assigned_driver_services = ScheduleDrivers(tempDate);
 
-    ScheduleBuses(tempDate, assigned_driver_services);
+  }
+
+  public static ArrayList<Service> Schedule(Date date)
+  {
+
+    int routes[] = {65,66,67,68};
+    ArrayList<Service> assigned_driver_services = ScheduleDrivers(date, routes);
+
+    return ScheduleBuses(date, assigned_driver_services, routes);
+
   }
 
 
-  public static ArrayList<Service> ScheduleDrivers(Date requiredDate)
+  public static ArrayList<Service> ScheduleDrivers(Date requiredDate, int routes[])
   {
   int wastedTime = 0;
   int totalTime = 0;
@@ -22,7 +29,6 @@ public class Scheduling
   ArrayList<Driver> drivers = new ArrayList();
   ArrayList<Driver> assignedDrivers = new ArrayList();
   int[] allDrivers = DriverInfo.getDrivers();
-  int routes[] = {65,66,67,68};
   ArrayList<Service> services = new ArrayList();
   ArrayList<Service> assignedServices = new ArrayList();
 
@@ -55,7 +61,7 @@ public class Scheduling
       for(int i = 0; i < drivers.size(); i++)
       {
         wastedTime = 0;
-        System.out.println("Driver " + i);
+       // System.out.println("Driver " + i);
 
         //loop through all services, trying to assign driver
         for(int j = 0; j < services.size(); j++)
@@ -65,10 +71,10 @@ public class Scheduling
             wastedTime = services.get(j).getStart() - drivers.get(i).getUnavailableDriverEndTime();
           }
 
-          System.out.println("Service starts at: " + services.get(j).getStart());
+        //  System.out.println("Service starts at: " + services.get(j).getStart());
           if (!drivers.get(i).hasTakenBreak() && drivers.get(i).isAvailable(services.get(j).getStart()) && drivers.get(i).getMinutesForToday() + wastedTime <= 300)
           {
-            System.out.println("a");
+           // System.out.println("a");
             if (drivers.get(i).getMinutesForToday() + services.get(j).getDuration() > 300)
             //give him a 1 hour break
             {
@@ -141,11 +147,11 @@ public class Scheduling
     driver.setHoursForToday();
     DriverInfo.setHoursThisWeek(driver.getDriverID(), (DriverInfo.getHoursThisWeek(driver.getDriverID()) + driver.getHoursForToday()));
     DriverInfo.setHoursThisYear(driver.getDriverID(), (DriverInfo.getHoursThisYear(driver.getDriverID()) + driver.getHoursForToday()));
-    System.out.println("DRIVER " + driver.getDriverID() + " " + (DriverInfo.getHoursThisWeek(driver.getDriverID()) + " "+  driver.getMinutesForToday()));
+   // System.out.println("DRIVER " + driver.getDriverID() + " " + (DriverInfo.getHoursThisWeek(driver.getDriverID()) + " "+  driver.getMinutesForToday()));
   }
 
 
-  System.out.println("TOTAL TIME : " + totalTime);
+ // System.out.println("TOTAL TIME : " + totalTime);
 
   return assignedServices;
 }//ScheduleDrivers()
@@ -153,7 +159,7 @@ public class Scheduling
 
 
 
-  public static void ScheduleBuses(Date requiredDate, ArrayList<Service> services)
+  public static ArrayList<Service> ScheduleBuses(Date requiredDate, ArrayList<Service> services, int routes[])
   {
     int totalTime = 0;
     boolean busAssigned = false;
@@ -161,7 +167,6 @@ public class Scheduling
     Date date = requiredDate;
   
     int[] allDrivers = DriverInfo.getDrivers();
-    int routes[] = {65,66,67,68};
 
   
     ArrayList<Bus> buses = new ArrayList();
@@ -177,7 +182,7 @@ public class Scheduling
       }
     }
 
- System.out.println("SDFADSOIJADSOIADSOIASDOJIASD");
+
   /*for(Service service : services)
   {
     System.out.print("service no: " + service.getServiceNumber());
@@ -192,7 +197,7 @@ public class Scheduling
         //loop through all services, trying to assign driver
         for(int j = 0; j < services.size(); j++)
         {
-          System.out.println(" TIME OF SERVICE: " + services.get(j).getStart());
+          //System.out.println(" TIME OF SERVICE: " + services.get(j).getStart());
 
           //assign a bus
           while (!busAssigned)
@@ -221,7 +226,7 @@ public class Scheduling
             {
               int idOfBus =bus.getID();
               BusInfo.setAvailable(idOfBus, date, false);
-              System.out.println("BUS " + bus.getHoursDriven());
+           //   System.out.println("BUS " + bus.getHoursDriven());
             }
           }
 
@@ -231,6 +236,8 @@ public class Scheduling
     System.out.print(", driver id: " + service.getDriver().getDriverID());
     System.out.println(", bus id: " + service.getBus());
   }  
+
+  return services;
 }//ScheduleBuses()
 
 

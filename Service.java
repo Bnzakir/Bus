@@ -41,6 +41,11 @@ public class Service
 		return service_number;
 	}
 
+	public ServiceTime[] getServiceTimes()
+	{
+		return service;
+	}
+
 	public int getStart()
 	{
 		return start_time_in_minutes;

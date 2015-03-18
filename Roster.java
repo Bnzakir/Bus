@@ -8,14 +8,14 @@ public class Roster {
     public static void main(String[] args) 
     {
         database.openBusDatabase();
-
+/*
         int routes[] = {65,66,67,68};
         ArrayList<Service> services = new ArrayList();
 
         getAllServices(routes, services);
 
         printServiceTimes(services);
-       // printServiceTimes(service_times);
+       // printServiceTimes(service_times); */
     }
 
 
