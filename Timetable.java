@@ -1,8 +1,3 @@
-/*
- * A very simple application illustrating how to use the interface.
- * Prints the names of all the drivers in the database.
- * @author John Sargeant
- */
 import java.util.*;
 import static java.util.Calendar.*;
 
@@ -21,9 +16,9 @@ public class Timetable extends JFrame{
      
 /*******************************************************************************/
 //Attributes used
-  private	JPanel topPanel;
-  private	JTable table;
-  private	JScrollPane scrollPane;
+  private JPanel topPanel;
+  private JTable table;
+  private JScrollPane scrollPane;
   private static String times[][];
   private static ArrayList<Service> services; 
 /*******************************************************************************/
@@ -32,7 +27,7 @@ public class Timetable extends JFrame{
     public static void main(String[] args) 
     {
         database.openBusDatabase();
-
+/*
         Date date = new Date(116, 2, 21);
         int day = date.getDate();
         for (int index = 0; index < 7; index++)
@@ -40,30 +35,30 @@ public class Timetable extends JFrame{
           Timetable mainFrame = new Timetable(date);
           mainFrame.setVisible( true ); 
           date.setDate(++day);
-        }
+        }*/
     }
 /*******************************************************************************/
-	  // Constructor of main frame
-	  public Timetable(Date date)
-	  {
+    // Constructor of main frame
+    public Timetable(Date date)
+    {
               //Date date = new Date(116, 1, 1);
              // int day = date.getDate();
-		  // Set the frame characteristics
-		  setTitle("Date: " + date.getDate() + "." + date.getMonth() + "." + (date.getYear()+1900));
-		  setSize( 1000, 1000 );
-		  setBackground( Color.gray );
+      // Set the frame characteristics
+      setTitle("Date: " + date.getDate() + "." + date.getMonth() + "." + (date.getYear()+1900));
+      setSize( 1000, 1000 );
+      setBackground( Color.gray );
               // for (int index = 0; index < nrOfDays; index++)
              //  {
                   services = Scheduling.Schedule(date);
                //   date.setDate(++day);
               // }
-		  // Create a panel to hold all other components
-		  topPanel = new JPanel();
-		  topPanel.setLayout( new BorderLayout() );
-		  getContentPane().add( topPanel );
+      // Create a panel to hold all other components
+      topPanel = new JPanel();
+      topPanel.setLayout( new BorderLayout() );
+      getContentPane().add( topPanel );
 
-		  // Create columns names, according to the number of bus stops
-		  
+      // Create columns names, according to the number of bus stops
+      
 /* Method to store all the timing points in an array list */
 
         int servicesize =  services.size();
@@ -94,16 +89,13 @@ public class Timetable extends JFrame{
 
         } 
 
-		  // Create a new table instancem
-		  table = new JTable( times, columnNames );
+      // Create a new table instancem
+      table = new JTable( times, columnNames );
 
-		  // Add the table to a scrolling pane
-		  scrollPane = new JScrollPane( table );
-		  topPanel.add( scrollPane, BorderLayout.CENTER );
-	  }
-	  
+      // Add the table to a scrolling pane
+      scrollPane = new JScrollPane( table );
+      topPanel.add( scrollPane, BorderLayout.CENTER );
+    }
+    
 /*******************************************************************************/
-
-
-
 }
