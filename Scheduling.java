@@ -22,7 +22,7 @@ public class Scheduling
   ArrayList<Driver> drivers = new ArrayList();
   ArrayList<Driver> assignedDrivers = new ArrayList();
   int[] allDrivers = DriverInfo.getDrivers();
-  int routes[] = {65};
+  int routes[] = {65,66,67,68};
   ArrayList<Service> services = new ArrayList();
   ArrayList<Service> assignedServices = new ArrayList();
 
@@ -161,7 +161,7 @@ public class Scheduling
     Date date = requiredDate;
   
     int[] allDrivers = DriverInfo.getDrivers();
-    int routes[] = {65};
+    int routes[] = {65,66,67,68};
 
   
     ArrayList<Bus> buses = new ArrayList();
@@ -173,21 +173,20 @@ public class Scheduling
       {
         Bus bus = new Bus(allBuses[i]);
         buses.add(bus);
-        System.out.println(i);
+        //System.out.println(i);
       }
     }
 
  System.out.println("SDFADSOIJADSOIADSOIASDOJIASD");
-  for(Service service : services)
+  /*for(Service service : services)
   {
     System.out.print("service no: " + service.getServiceNumber());
     System.out.println(", driver id: " + service.getDriver().getDriverID());
     //System.out.println(", bus id: " + service.getBus());
-  }  
+  }  */
 
   // for each driver, based on the fair scheduling algorithm, assign him to a service
 
-//Collections.sort(services);
   sortServices(services);
 
         //loop through all services, trying to assign driver
