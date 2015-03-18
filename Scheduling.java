@@ -6,12 +6,13 @@ public class Scheduling
   {
     database.openBusDatabase();
     Date tempDate = new Date(115,9,9);
-    ScheduleDrivers(tempDate);
-    ScheduleBuses(tempDate);
+  ArrayList<Service> assigned_driver_services = ScheduleDrivers(tempDate);
+
+    ScheduleBuses(tempDate, assigned_driver_services);
   }
 
 
-  public static void ScheduleDrivers(Date requiredDate)
+  public static ArrayList<Service> ScheduleDrivers(Date requiredDate)
   {
   int wastedTime = 0;
   int totalTime = 0;
@@ -21,7 +22,7 @@ public class Scheduling
   ArrayList<Driver> drivers = new ArrayList();
   ArrayList<Driver> assignedDrivers = new ArrayList();
   int[] allDrivers = DriverInfo.getDrivers();
-  int routes[] = {68};
+  int routes[] = {65};
   ArrayList<Service> services = new ArrayList();
   ArrayList<Service> assignedServices = new ArrayList();
 
@@ -41,6 +42,8 @@ public class Scheduling
     Roster.getServicesSunday(routes, services);
   else
     Roster.getServicesWeekday(routes, services);
+
+  sortServices(services);
 
   for (Service serv: services)
     totalTime += serv.getDuration();
@@ -141,19 +144,16 @@ public class Scheduling
     System.out.println("DRIVER " + driver.getDriverID() + " " + (DriverInfo.getHoursThisWeek(driver.getDriverID()) + " "+  driver.getMinutesForToday()));
   }
 
-  for(Service service : assignedServices)
-  {
-    System.out.print("service no: " + service.getServiceNumber());
-    System.out.print(", driver id: " + service.getDriver().getDriverID());
-    System.out.println(", bus id: " + service.getBus());
-  }  
+
   System.out.println("TOTAL TIME : " + totalTime);
+
+  return assignedServices;
 }//ScheduleDrivers()
 
 
 
 
-  public static void ScheduleBuses(Date requiredDate)
+  public static void ScheduleBuses(Date requiredDate, ArrayList<Service> services)
   {
     int totalTime = 0;
     boolean busAssigned = false;
@@ -161,9 +161,8 @@ public class Scheduling
     Date date = requiredDate;
   
     int[] allDrivers = DriverInfo.getDrivers();
-    int routes[] = {65,66};
-    ArrayList<Service> services = new ArrayList();
-    ArrayList<Service> assignedServices = new ArrayList();
+    int routes[] = {65};
+
   
     ArrayList<Bus> buses = new ArrayList();
     int[] allBuses = BusInfo.getBuses();  
@@ -174,17 +173,22 @@ public class Scheduling
       {
         Bus bus = new Bus(allBuses[i]);
         buses.add(bus);
+        System.out.println(i);
       }
     }
 
-  // for each driver, based on the fair scheduling algorithm, assign him to a service
-  if(date.getDay() == 0 )
-    Roster.getServicesSaturday(routes, services);
-  else if(date.getDay() == 6)
-    Roster.getServicesSunday(routes, services);
-  else
-    Roster.getServicesWeekday(routes, services);
+ System.out.println("SDFADSOIJADSOIADSOIASDOJIASD");
+  for(Service service : services)
+  {
+    System.out.print("service no: " + service.getServiceNumber());
+    System.out.println(", driver id: " + service.getDriver().getDriverID());
+    //System.out.println(", bus id: " + service.getBus());
+  }  
 
+  // for each driver, based on the fair scheduling algorithm, assign him to a service
+
+//Collections.sort(services);
+  sortServices(services);
 
         //loop through all services, trying to assign driver
         for(int j = 0; j < services.size(); j++)
@@ -209,7 +213,7 @@ public class Scheduling
           busCount = 0;
 
           //remove the service from the array list
-          services.remove(services.get(j));
+          //services.remove(services.get(j));
         }//for services
 
         for (Bus bus : buses)
@@ -221,6 +225,13 @@ public class Scheduling
               System.out.println("BUS " + bus.getHoursDriven());
             }
           }
+
+  for(Service service : services)
+  {
+    System.out.print("service no: " + service.getServiceNumber());
+    System.out.print(", driver id: " + service.getDriver().getDriverID());
+    System.out.println(", bus id: " + service.getBus());
+  }  
 }//ScheduleBuses()
 
 
@@ -254,6 +265,20 @@ public class Scheduling
       {
         return  driver1.compareTo(driver2, 2);
       }
+    }
+    );
+  }//sortDrivers
+
+
+  public static void sortServices(ArrayList<Service> services)
+  {
+    Collections.sort(services, new Comparator<Service>()
+    {
+      @Override
+       public int compare(Service  service1, Service  service2)
+       {
+          return  service1.compareTo(service2);
+        }
     }
     );
   }//sortDrivers

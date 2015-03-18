@@ -82,6 +82,16 @@ public class Service
 		return route;
 	}
 
+	public  int compareTo(Service otherService)
+    {
+        if(this.start_time_in_minutes > otherService.start_time_in_minutes)
+          return 1;
+        else if(this.start_time_in_minutes < otherService.start_time_in_minutes)
+            return -1;
+        else
+            return 0;  
+    }
+
 	//public String toString()
 	//{
 
