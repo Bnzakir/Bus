@@ -269,7 +269,6 @@ public class Scheduling
     );
   }//sortDrivers
 
-
   public static void sortServices(ArrayList<Service> services)
   {
     Collections.sort(services, new Comparator<Service>()

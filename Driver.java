@@ -135,8 +135,13 @@ public class Driver implements Comparable<Driver>
   @Override
     public  int compareTo(Driver otherDriver)
     {
-        return 1;
-    }
+         if(this.driverID > otherDriver.driverID)
+           return 1;
+         else if(this.driverID < otherDriver.driverID)
+             return -1;
+         else
+             return 0;       
+   }
 
     public int compareTo(Driver otherDriver, int type)
     {
