@@ -6,6 +6,9 @@ public class Driver implements Comparable<Driver>
   private int minutesToday;
   private boolean breakTaken;
   private int hoursToday;
+  private boolean firstShift;
+  private int startingTime;
+  private int finishTime;
 
   public Driver(int requiredID)
   {
@@ -15,6 +18,8 @@ public class Driver implements Comparable<Driver>
     breakTaken = false;
     unavailableEndTime = 0;
     unavailableStartTime = 0;
+    firstShift = true;
+    startingTime = 0;
   }
 
   public int getDriverID()
@@ -22,6 +27,32 @@ public class Driver implements Comparable<Driver>
     return driverID;
   }
 
+  public void setStartingTime(int time)
+  {
+    startingTime = time;
+  }
+
+  public void setFinishTime(int time)
+  {
+    finishTime = time;
+  }
+
+  public int getFinishTime()
+  {
+    return finishTime;
+  }
+
+  public boolean isFirstShift()
+  {
+    if (firstShift == true)
+      return true;
+    else return false;
+  }
+
+  public void setFirstShift()
+  {
+    firstShift = false;
+  }
 
   public int getHoursWeek()
   {

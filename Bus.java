@@ -62,12 +62,20 @@ public class Bus implements Comparable<Bus>
     unavailableEndTime = reqUnavailableEndTime;
   }
 
+
   public boolean isAvailable(int serviceStartTime)
   {
     if (unavailableEndTime <= serviceStartTime)
       return true;
     else return false;
-  }  
+  }
+  
+ /* public boolean isAvailable(int serviceStartTime, int serviceEndTime)
+  {
+    if (unavailableStartTime < serviceStartTime || unavailableEndTime > serviceStartTime)
+      return true;
+    else return false;
+  }  */
 
     @Override
     public  int compareTo(Bus otherBus)
