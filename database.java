@@ -354,7 +354,7 @@ public class database
     }
     catch (Exception ex)
     {
-      throw new InvalidQueryException("Database update failed");
+      throw new InvalidQueryException("Database update failed - table connect");
     }
   }
 
@@ -371,7 +371,7 @@ public class database
       }
       catch (Exception ex)
       {
-        throw new InvalidQueryException("Database update failed");
+        throw new InvalidQueryException("Database update failed- end");
       }
   }
 
@@ -386,6 +386,14 @@ public class database
       }
     end_new_record();
   }
+
+
+  public Boolean insert_roster(Integer service, Integer driver, Integer bus)
+  {
+    return execute("INSERT INTO roster VALUES (" + service + "," + driver + "," + bus);
+
+  }
+
 
   public Boolean select_record(String table_name, String criteria)
   {

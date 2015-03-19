@@ -239,17 +239,18 @@ public class Scheduling
 
   for(Service service : services)
   {
-    System.out.print("service no: " + service.getServiceNumber());
-    System.out.print(", driver id: " + service.getDriver().getDriverID());
-    System.out.println(", bus id: " + service.getBus());
+    addRosterToDatabase(service.getServiceNumber(), service.getDriver().getDriverID(), service.getBus(), date);
   }  
 
   return services;
 }//ScheduleBuses()
 
 
+  public static void addRosterToDatabase(int service, int driver, int bus, Date date)
+  {
+    database.busDatabase.new_record("roster", new Object[][]{{"service", service}, {"driver", driver}, {"bus", bus}, {"day", date}});
 
-
+  }
 
   public static void sortDrivers(ArrayList<Driver> drivers)
   {

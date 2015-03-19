@@ -64,17 +64,27 @@ public class Timetable extends JFrame{
         int servicesize =  services.size();
        // int nostops = services.get(0).getServiceTimes().length;
         int nostops = 12;
-        times = new String[servicesize][nostops + 1];
-        String columnNames[] = new String[nostops + 1];
+        times = new String[servicesize][nostops + 3];
+        String columnNames[] = new String[nostops + 3];
         columnNames[0] = "Route";
           for(int i = 1; i < nostops + 1; i++)
           {
             columnNames[i] = ("Bus stop" + i);
           }
+   
+            columnNames[nostops + 1] = ("driver ID");
+            columnNames[nostops + 2] = ("bus ID");
         System.out.println("no.services: " + services.size());
 
         for(int i=0; i < services.size(); i++)
           times[i][0] = "" +services.get(i).getRoute();
+
+        for(int i=0; i < services.size(); i++)
+          times[i][nostops + 1] = "" +services.get(i).getDriver().getDriverID();
+
+        for(int i=0; i < services.size(); i++)
+          times[i][nostops + 2] = "" +services.get(i).getBus();
+
 
        // int times[][];
         for(int i=0; i < services.size(); i++)
