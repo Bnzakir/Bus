@@ -208,9 +208,9 @@ public class database
 
   public int[] select_ids(String id_field, String source, String field1, Object value1, String field2, Object value2, String order)
   {
-    int    count    = record_count(id_field, source, field1 + " = " + value_string(value1) + " And " + field2 + " = " + value_string(value2));
+    int    count    = record_count(id_field, source, field1 + " = " + value_string(value1) + " AND " + field2 + " = " + value_string(value2));
     int[]  results  = new int[count];
-    select(id_field, source, field1 + " = " + value_string(value1) + " And " + field2 + " = " + value_string(value2), order);
+    select(id_field, source, field1 + " = " + value_string(value1) + " AND " + field2 + " = " + value_string(value2), order);
     for (int i = 0; i < count && move_next(); i = i + 1)
       results[i] = (Integer)get_field(id_field.replaceFirst("Distinct ", ""));
     return results;
@@ -222,6 +222,14 @@ public class database
     if (move_first())
       return (Integer)get_field(field_name);
     else return 0;
+  }
+
+  public int get_int_delay(String table, int service_number, Date date, String field_name)
+  {
+    select(field_name, table, "service_number = " + service_number + "AND date = " + date, "");
+    if (move_first())
+      return (Integer)get_field(field_name);
+    else return -1;
   }
 
   public String get_string(String table, int id, String field_name)

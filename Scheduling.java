@@ -75,7 +75,9 @@ public class Scheduling
         {
           if (!drivers.get(i).isFirstShift())
           {
+
             wastedTime = services.get(j).getStart() - drivers.get(i).getUnavailableDriverEndTime();
+            
           }
 
         //  System.out.println("Service starts at: " + services.get(j).getStart());

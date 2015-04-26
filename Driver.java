@@ -101,10 +101,12 @@ public class Driver implements Comparable<Driver>
 
   public void setHoursForToday()
   {
-    if((minutesToday/60)%60 == 0)
+    if(minutesToday%60 == 0)
       hoursToday = minutesToday/60;
     else
       hoursToday = minutesToday/60 + 1;
+    if(driverID == 2016)
+    System.out.println("Driver: " + driverID + " no. hours: " + hoursToday + " no. mins: " +minutesToday);
   }
 
   public int getHoursForToday()

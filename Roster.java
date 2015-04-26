@@ -112,6 +112,41 @@ public class Roster {
         return list_services;
     }
 
+
+    public static Service[] getServiceTimesRoutePassenger(int busstop, Date date)
+    {
+        
+        int noservices = TimetableInfo.getNumberOfServices(route, day);
+        int[] timingpoints = TimetableInfo.getTimingPoints(route);
+
+        int notimingpoints = TimetableInfo.getTimingPoints(route).length;
+
+        ServiceTime route_times[][] = new ServiceTime[noservices][notimingpoints];
+
+        int services[] = TimetableInfo.getServices(route, day);
+
+        Service list_services[] = new Service[services.length];
+
+        for(int i=0; i < services.length; i++)
+        {
+            int[] serviceTimes = TimetableInfo.getServiceTimes(route, day, i);
+
+            for(int j=0; j < serviceTimes.length; j++)
+            {
+                route_times[i][j] = new ServiceTime(route, timingpoints[j], serviceTimes[j], services[i]);
+            }
+
+            for(int j=0; j < serviceTimes.length; j++)
+            {
+                list_services[i] = new Service(serviceTimes.length, route_times[i], route);
+            }
+        }
+
+        return list_services;
+    }
+
+
+
     public static void printServiceTimes(ArrayList<Service> services)
     {
         for(int i=0; i < services.size(); i++)
