@@ -113,48 +113,36 @@ public class Roster {
     }
 
 
-    public static Service[] getServiceTimesRoutePassenger(int bus_stop, Date date)
+    public static void getServiceTimesRoutePassenger(int bus_stop, Date date)
     {
         int day_type;
         // if weekend 0=sunday, 6=saturday
         if(date.getDay() == 0)
-            day_type = 2
+            day_type = 2;
         if(date.getDay() == 6)
-            day_type = 1
+            day_type = 1;
         else
             day_type = 0;
-       /* int noservices = TimetableInfo.getNumberOfServices(route, day);
-        int[] timingpoints = TimetableInfo.getTimingPoints(route);
 
-        int notimingpoints = TimetableInfo.getTimingPoints(route).length;
 
-        ServiceTime route_times[][] = new ServiceTime[noservices][notimingpoints];
+        int[] times = database.busDatabase.select_times("time", "timetable_line", bus_stop, day_type, "");
+        int[] services = database.busDatabase.select_times("service", "timetable_line", bus_stop, day_type, "");
 
-        int services[] = TimetableInfo.getServices(route, day);
 
-        Service list_services[] = new Service[services.length];
-
-        for(int i=0; i < services.length; i++)
+        for(int i=0; i < times.length; i++)
         {
-            int[] serviceTimes = TimetableInfo.getServiceTimes(route, day, i);
-
-            for(int j=0; j < serviceTimes.length; j++)
+            if(Delay.getDelay(services[i], date) > 0)
             {
-                route_times[i][j] = new ServiceTime(route, timingpoints[j], serviceTimes[j], services[i]);
+                times[i] += Delay.getDelay(services[i], date);
+                System.out.println("Delayed service: " + times[i] + ", " + services[i]);
             }
-
-            for(int j=0; j < serviceTimes.length; j++)
+            else if(Delay.getDelay(services[i], date) < 0)
             {
-                list_services[i] = new Service(serviceTimes.length, route_times[i], route);
-            }
+                System.out.println("Cancelled service: " + services[i]);
+            }   
+            else 
+                System.out.println("On time: " + times[i] + ", " + services[i]);         
         }
-
-        return list_services;*/
-
-        int[] times = database.select_times("timing_point", "timetable_line", bus_stop, day_type, "");
-
-        for(int time: times)
-            System.out.println(time);
     }
 
 

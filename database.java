@@ -217,25 +217,29 @@ public class database
   }
 
 
-  public int[] select_times(String id_field, String source, int timingpoint, Object value1, String order)
+  public int[] select_times(String id_field, String source, Object value1, Object value2, String order)
   {
-    if(daytype == 0)
-      int count = record_count(id_field, source, "timing_point +  = " + value_string(value1) + " AND  (daily_timetable =  193  OR  199  OR 202 OR 196)");
-    else if(daytype == 1)
-      int count    = record_count(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  194  OR  200  OR 203 OR 197)");
-    else if(daytype == 2)
-      int count    = record_count(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  195  OR  201  OR 204 OR 198)");
-    
+    int count=0;;
+    // weekday
+    if((int)value2 == 0)
+      count = record_count(id_field, source, "timing_point = " + value_string(value1) + " And (daily_timetable = 193 Or daily_timetable = 196 Or daily_timetable = 199 Or daily_timetable = 202)");
+    // saturday
+    else if((int)value2 == 1)
+      count = record_count(id_field, source, "timing_point = " + value_string(value1) + " And (daily_timetable = 194 Or daily_timetable = 197 Or daily_timetable = 200 Or daily_timetable = 203)");
+    // sunday
+    else if((int)value2 == 2)
+      count = record_count(id_field, source, "timing_point = " + value_string(value1) + " And (daily_timetable = 195 Or daily_timetable = 198 Or daily_timetable = 201 Or daily_timetable = 204)");
+
+
     int[]  results  = new int[count];
 
-    if(daytype == 0)
-      select(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  193  OR  199  OR 202 OR 196)", order);
+    if((int)value2 == 0)
+      select(id_field, source, "timing_point = " + value_string(value1) + " And (daily_timetable = 193 Or daily_timetable = 196 Or daily_timetable = 199 Or daily_timetable = 202)", order);
+    else if((int)value2 == 1)
+      select(id_field, source, "timing_point = " + value_string(value1) + " And (daily_timetable = 194 Or daily_timetable = 197 Or daily_timetable = 200 Or daily_timetable = 203)", order);
+    else if((int)value2 == 2)
+      select(id_field, source, "timing_point = " + value_string(value1) + " And (daily_timetable = 195 Or daily_timetable = 198 Or daily_timetable = 201 Or daily_timetable = 204)", order);
 
-    if(daytype == 1)
-      select(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  194  OR  200  OR 203 OR 197)", order);
-
-    if(daytype == 2)
-      select(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  195  OR  201  OR 204 OR 198)", order);
 
     for (int i = 0; i < count && move_next(); i = i + 1)
       results[i] = (Integer)get_field(id_field.replaceFirst("Distinct ", ""));
@@ -257,7 +261,7 @@ public class database
     select(field_name, table, "service_number = " + service_number + " And date = " + sql_date(date), "");
     if (move_first())
       return (Integer)get_field(field_name);
-    else return -1;
+    else return 0;
   }
 
   public String get_string(String table, int id, String field_name)
