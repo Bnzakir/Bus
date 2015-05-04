@@ -210,11 +210,38 @@ public class database
   {
     int    count    = record_count(id_field, source, field1 + " = " + value_string(value1) + " AND " + field2 + " = " + value_string(value2));
     int[]  results  = new int[count];
-    select(id_field, source, field1 + " = " + value_string(value1) + " AND " + field2 + " = " + value_string(value2), order);
+    select(id_field, source, field1 + " = " + value_string(value1) + " And " + field2 + " = " + value_string(value2), order);
     for (int i = 0; i < count && move_next(); i = i + 1)
       results[i] = (Integer)get_field(id_field.replaceFirst("Distinct ", ""));
     return results;
   }
+
+
+  public int[] select_times(String id_field, String source, int timingpoint, Object value1, String order)
+  {
+    if(daytype == 0)
+      int count = record_count(id_field, source, "timing_point +  = " + value_string(value1) + " AND  (daily_timetable =  193  OR  199  OR 202 OR 196)");
+    else if(daytype == 1)
+      int count    = record_count(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  194  OR  200  OR 203 OR 197)");
+    else if(daytype == 2)
+      int count    = record_count(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  195  OR  201  OR 204 OR 198)");
+    
+    int[]  results  = new int[count];
+
+    if(daytype == 0)
+      select(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  193  OR  199  OR 202 OR 196)", order);
+
+    if(daytype == 1)
+      select(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  194  OR  200  OR 203 OR 197)", order);
+
+    if(daytype == 2)
+      select(id_field, source, "timing_point +  = " + timingpoint + " AND  (daily_timetable =  195  OR  201  OR 204 OR 198)", order);
+
+    for (int i = 0; i < count && move_next(); i = i + 1)
+      results[i] = (Integer)get_field(id_field.replaceFirst("Distinct ", ""));
+    return results;
+  } 
+
 
   public int get_int(String table, int id, String field_name)
   {
@@ -224,9 +251,10 @@ public class database
     else return 0;
   }
 
-  public int get_int_delay(String table, int service_number, Date date, String field_name)
+  public int get_int_delay(String table, int service_number, java.util.Date date, String field_name)
   {
-    select(field_name, table, "service_number = " + service_number + "AND date = " + date, "");
+
+    select(field_name, table, "service_number = " + service_number + " And date = " + sql_date(date), "");
     if (move_first())
       return (Integer)get_field(field_name);
     else return -1;

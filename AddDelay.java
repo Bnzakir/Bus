@@ -79,7 +79,7 @@ public class AddDelay extends JFrame implements ActionListener
 
   public void actionPerformed(ActionEvent e)
   {
-
+    database.openBusDatabase();
 
     int day1 = Integer.parseInt(day.getText());
     int month1 = Integer.parseInt(month.getText());
@@ -93,17 +93,23 @@ public class AddDelay extends JFrame implements ActionListener
 
     String message1 = message.getText();
     
-    Date delay_date = new Date(year1, month1, day1);
+    Date delay_date = new Date(year1 - 3800, month1 - 1, day1);
 
-    Delay.setDelay(service, bus, delay, message1, delay_date);
+    Delay.addDelayToDatabase(service, bus, delay, message1, delay_date);
  
 
   } // actionPerformed
 
   public static void main(String[] args)
   {
-    new AddDelay().setVisible(true);
-    database.openBusDatabase();
+  //  new AddDelay().setVisible(true);
+database.openBusDatabase();
+    Date test = new Date(2015-1900,3,29);
+
+  //  System.out.println(Delay.getDelay(565, test));
+    
+      Roster.getServiceTimesRoutePassenger(770, test);
+
   } // main
 
 } // class ThreeWeights

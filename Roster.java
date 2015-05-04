@@ -113,10 +113,17 @@ public class Roster {
     }
 
 
-    public static Service[] getServiceTimesRoutePassenger(int busstop, Date date)
+    public static Service[] getServiceTimesRoutePassenger(int bus_stop, Date date)
     {
-        
-        int noservices = TimetableInfo.getNumberOfServices(route, day);
+        int day_type;
+        // if weekend 0=sunday, 6=saturday
+        if(date.getDay() == 0)
+            day_type = 2
+        if(date.getDay() == 6)
+            day_type = 1
+        else
+            day_type = 0;
+       /* int noservices = TimetableInfo.getNumberOfServices(route, day);
         int[] timingpoints = TimetableInfo.getTimingPoints(route);
 
         int notimingpoints = TimetableInfo.getTimingPoints(route).length;
@@ -142,7 +149,12 @@ public class Roster {
             }
         }
 
-        return list_services;
+        return list_services;*/
+
+        int[] times = database.select_times("timing_point", "timetable_line", bus_stop, day_type, "");
+
+        for(int time: times)
+            System.out.println(time);
     }
 
 
