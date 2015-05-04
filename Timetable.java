@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 /*******************************************************************************/
-
+// Timaetable class
 public class Timetable extends JFrame{
 
   public enum timetableKind {weekday, saturday, sunday};
@@ -23,7 +23,7 @@ public class Timetable extends JFrame{
   private static ArrayList<Service> services; 
 /*******************************************************************************/
 
-
+// Main Method 
     public static void main(String[] args) 
     {
         database.openBusDatabase();
