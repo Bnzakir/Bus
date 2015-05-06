@@ -70,7 +70,7 @@ public class JourneyPlannerGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(225, 178, 117));
-        setPreferredSize(new java.awt.Dimension(700, 380));
+        setPreferredSize(new java.awt.Dimension(900, 450));
 
         jPanel2.setBackground(new java.awt.Color(225, 178, 117));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -160,7 +160,7 @@ public class JourneyPlannerGUI extends javax.swing.JFrame {
         jPanel4.setName(""); // NOI18N
 
         jTextArea1.setBackground(new java.awt.Color(220, 220, 220));
-        jTextArea1.setColumns(20);
+        jTextArea1.setColumns(25);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -187,7 +187,7 @@ public class JourneyPlannerGUI extends javax.swing.JFrame {
                 .addContainerGap(82, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
 

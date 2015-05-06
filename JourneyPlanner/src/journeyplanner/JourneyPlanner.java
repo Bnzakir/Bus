@@ -251,7 +251,7 @@ public static void calculateJourney(String startStop, String endStop)
       String out = "";
       for (int i = 0; i < routePlanner[routeIndex].size(); i++)
       {
-        out = out.format("%s   %-40s   %02d:%02d", 
+        out = out.format("%s\t%-40s\t%02d:%02d", 
                          routeNames[routeIndex].get(i).substring(0, 3), 
                          routePlanner[routeIndex].get(i), 
                          (journeyTimes.get(i)/60), 
