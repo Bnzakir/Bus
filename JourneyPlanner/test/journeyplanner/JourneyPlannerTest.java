@@ -6,6 +6,7 @@
 
 package journeyplanner;
 
+import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -59,7 +60,38 @@ public class JourneyPlannerTest {
         String endStop = "Stockport, Bus Station";
         JourneyPlanner tester = new JourneyPlanner();
         tester.calculateJourney(startStop, endStop);
-        int expResult = 
+        String expResult = "383	Marple, Back of Beyond                  	20:53\n" +
+"\n" +
+"383	Marple, Norfolk Arms                    	20:55\n" +
+"\n" +
+"383	Romiley, Corcoran Drive                 	21:00\n" +
+"\n" +
+"383	Romiley, Train Station                  	21:04\n" +
+"\n" +
+"383	Romiley, Frog and Diver Arms            	21:07\n" +
+"\n" +
+"383	Stockport, Lower Bents Lane/Stockport Road	21:11\n" +
+"\n" +
+"383	Stockport, Bus Station                  	21:22";
+        void result = JourneyPlanner.calculateJourney(startStop, endStop);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTimes method, of class JourneyPlanner.
+     */
+    @Test
+    public void testGetTimes() {
+        System.out.println("getTimes");
+        int busStop = 0;
+        Date today = null;
+        int route = 0;
+        int time = 0;
+        int expResult = 0;
+        int result = JourneyPlanner.getTimes(busStop, today, route, time);
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

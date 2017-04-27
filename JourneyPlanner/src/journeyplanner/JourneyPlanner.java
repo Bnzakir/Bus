@@ -240,7 +240,7 @@ public static void calculateJourney(String startStop, String endStop)
   
         for (int i = changeRouteIndex+1; i < journeyStops.size(); i++)
         {
-          journeyTimes.add(getTimes(journeyStops.get(i), today, endRoute, journeyTimes.get(changeRouteIndex)));
+          journeyTimes.add(getTimes(journeyStops.get(i), today, endRoute, journeyTimes.get(i-1)));
           //System.out.println(getTimes(journeyStops.get(i), today, endRoute, minutesToday));
         }
       }
@@ -284,11 +284,19 @@ public static void calculateJourney(String startStop, String endStop)
       int index = 0;
       while (index != busStopTimes.length && (busStopTimes[index]-time) < 0)
         index++;
+      
+      if (index == busStopTimes.length)
+          resultTime = 0;
+      else
+          resultTime = busStopTimes[index];
 
     //TimetableInfo.getTimetableID(todayKind, route);
     //System.out.println(busStopTimes[index]);
-
-      resultTime = busStopTimes[index];
+      //System.out.println(busStopTimes[index]);
+      //if (busStopTimes.length > 0)
+        
+     // else
+       //   return 0;
     }
     else
     {
